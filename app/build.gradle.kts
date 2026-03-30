@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.hiltAlias)
+    alias(libs.plugins.kotlinSerialization)
 
 }
 
@@ -74,9 +75,12 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
 
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.logging)
 
-    implementation(libs.squareup.retrofit)
-    implementation(libs.squareup.converter.gson)
     implementation(libs.squareup.okhttp)
 
     implementation(libs.androidx.room.runtime)

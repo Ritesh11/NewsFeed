@@ -12,6 +12,7 @@ import com.ritesh.newsfeed.data.model.BookmarkArticle
 import com.ritesh.newsfeed.data.util.Resource
 import com.ritesh.newsfeed.domain.NewsRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.daysUntil
@@ -60,8 +61,6 @@ class NewsRepositoryImpl @Inject constructor(
                         entity?.let {
                             localDataSource.insertArticles(it)
                         }
-
-
                     }
 
                     is Resource.Error -> {
@@ -81,6 +80,8 @@ class NewsRepositoryImpl @Inject constructor(
             emit(Resource.Success(articles))
         }
 
+    }.catch { e ->
+        emit(Resource.Error(e.localizedMessage ?: "Something went wrong"))
     }
 
     override suspend fun getSearchedNews(

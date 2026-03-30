@@ -4,30 +4,31 @@ package com.ritesh.newsfeed.data.model
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
-import java.io.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 
+@Serializable
 @Entity(tableName = "news_feed",
     indices = [Index(value = ["url"], unique = true)])
 data class Article(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
-    @SerializedName("author")
+    @SerialName("author")
     val author: String?,
-    @SerializedName("content")
+    @SerialName("content")
     val content: String?,
-    @SerializedName("description")
+    @SerialName("description")
     val description: String?,
-    @SerializedName("publishedAt")
+    @SerialName("publishedAt")
     val publishedAt: String?,
-    @SerializedName("source")
+    @SerialName("source")
     val source: Source?,
-    @SerializedName("title")
+    @SerialName("title")
     val title: String?,
-    @SerializedName("url")
+    @SerialName("url")
     val url: String?,
-    @SerializedName("urlToImage")
+    @SerialName("urlToImage")
     val urlToImage: String?,
     val fetchedAt: Long = System.currentTimeMillis()
-): Serializable
+)

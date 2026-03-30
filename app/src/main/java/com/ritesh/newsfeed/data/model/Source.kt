@@ -1,10 +1,13 @@
 package com.ritesh.newsfeed.data.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+
+@Serializable
 data class Source(
-    @SerializedName("id")
-    val id: String,
-    @SerializedName("name")
-    val name: String
+    @SerialName("id")
+    val id: String?,
+    @SerialName("name")
+    val name: String?
 )

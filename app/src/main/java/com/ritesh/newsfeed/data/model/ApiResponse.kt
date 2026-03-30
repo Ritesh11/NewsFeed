@@ -1,12 +1,15 @@
 package com.ritesh.newsfeed.data.model
 
-import com.google.gson.annotations.SerializedName
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class ApiResponse(
-    @SerializedName("articles")
+    @SerialName("articles")
     val articles: List<Article>,
-    @SerializedName("status")
+    @SerialName("status")
     val status: String,
-    @SerializedName("totalResults")
+    @SerialName("totalResults")
     val totalResults: Int
 )
