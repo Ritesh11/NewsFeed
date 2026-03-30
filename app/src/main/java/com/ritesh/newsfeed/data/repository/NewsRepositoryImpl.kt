@@ -23,11 +23,7 @@ import kotlin.math.abs
 import kotlin.time.Clock
 import kotlin.time.Instant
 
-
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
-
 class NewsRepositoryImpl @Inject constructor(
-    private val dataStore: DataStore<Preferences>,
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ) : NewsRepository {

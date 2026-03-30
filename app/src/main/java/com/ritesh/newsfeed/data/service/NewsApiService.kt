@@ -1,7 +1,5 @@
 package com.ritesh.newsfeed.data.service
 
-
-import com.ritesh.newsfeed.BuildConfig
 import com.ritesh.newsfeed.data.model.ApiResponse
 import com.ritesh.newsfeed.data.util.Resource
 import io.ktor.client.HttpClient
@@ -11,8 +9,6 @@ import io.ktor.client.request.header
 import io.ktor.http.HttpHeaders
 
 class NewsApiService(private val client: HttpClient) {
-
-    private val baseUrl = BuildConfig.BASE_URL
 
     suspend fun getNewsArticles(
         country: String,
