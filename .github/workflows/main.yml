@@ -23,6 +23,6 @@ jobs:
       run: echo Hello World
       
     - name: Run a multi line script
-      run: 
+      run: |
       echo Add another action to build,
       echo Test and deploy your project
