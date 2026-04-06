@@ -1,0 +1,28 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+#Allows me to run this workflow manually fom Action tabs
+workflow_dispatch:
+
+jobs:
+  build:
+    # We use ubuntu-latest because it has the C libraries and 
+    # Android SDK pre-installed, avoiding the AAPT2 errors you saw on Windows.
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Run a one line script
+      run: echo Hello World
+      
+    - name: Run a multi line script
+      run: 
+      echo Add another action to build,
+      echo Test and deploy your project
