@@ -8,13 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.ritesh.newsfeed.data.model.Article
 import com.ritesh.newsfeed.data.util.Resource
 import com.ritesh.newsfeed.domain.usecase.GetNewsUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import com.ritesh.newsfeed.presentation.NewsArticleEvents.FetchNewsArticle
 import com.ritesh.newsfeed.presentation.NewsArticleEvents.OnApplyNewUpdates
 import com.ritesh.newsfeed.presentation.NewsArticleEvents.Idle
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,7 +22,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

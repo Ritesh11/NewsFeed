@@ -84,6 +84,10 @@ dependencies {
     implementation(libs.androidx.hilt.common)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.lifecycle.process)
+    testImplementation(libs.junit.junit)
+    testImplementation(libs.junit.junit)
+    testImplementation(libs.junit.junit)
+    testImplementation(libs.junit.junit)
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.hilt.android)
@@ -99,6 +103,10 @@ dependencies {
 
     implementation(libs.androidx.material.icons)
 
+    testImplementation(libs.junit)
+    testImplementation(libs.google.truth)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockito.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
