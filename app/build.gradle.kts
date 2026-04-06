@@ -53,13 +53,9 @@ android {
         }
     }
 
-    /*buildscript {
-        dependencies{
-            classpath(libs.kotlin.gradel.plugin)
-            classpath(libs.kps.symbol.processing.gradle.plugin)
-
-        }
-    }*/
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
 
 }
 
