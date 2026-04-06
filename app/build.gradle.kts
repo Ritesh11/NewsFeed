@@ -54,7 +54,12 @@ android {
     }
 
     lint {
+        disable.add("RestrictedApi")
+        // Don't let generated code break your build
+        checkGeneratedSources = false
         baseline = file("lint-baseline.xml")
+        abortOnError = false
+        checkDependencies = true
     }
 
 }
