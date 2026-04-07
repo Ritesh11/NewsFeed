@@ -26,7 +26,7 @@ sonar {
         property("sonar.token", System.getenv("SONAR_TOKEN") ?: "")
 
         // Manually collect the files from the app module
-        property("sonar.sources", "app/src/main/java,app/src/main/kotlin")
+        property("sonar.sources", "app/src/main/java")
         property("sonar.java.binaries", "app/build/intermediates/javac/debug/classes")
         property("sonar.android.lint.reportPaths", "app/build/reports/lint-results-debug.xml")
     }
