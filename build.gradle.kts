@@ -20,7 +20,7 @@ allprojects {
 // Now configure only the ROOT project to collect the data
 sonar {
     properties {
-        property("sonar.organization", "Ritesh11")
+        property("sonar.organization", "ritesh11")
         property("sonar.projectKey", "Ritesh11_NewsFeed")
         property("sonar.projectName", "NewsFeed")
         property("sonar.host.url", "https://sonarcloud.io")
