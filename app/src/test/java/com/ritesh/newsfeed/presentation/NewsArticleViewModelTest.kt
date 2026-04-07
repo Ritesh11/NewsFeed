@@ -9,6 +9,7 @@ import com.ritesh.newsfeed.data.util.Resource
 import com.ritesh.newsfeed.domain.usecase.GetNewsUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
@@ -44,6 +45,7 @@ class NewsArticleViewModelTest {
         assertThat(viewModel.articleState.value.isLoading).isTrue()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `successful fetch should update displayed articles`() = runTest {
         // Mock success response
@@ -60,6 +62,7 @@ class NewsArticleViewModelTest {
         assertThat(state.displayedArticles).isEqualTo(initialArticles)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `new updates should show pending articles and hasNewUpdates true`() = runTest {
         // Create a behavior that emits old then new news

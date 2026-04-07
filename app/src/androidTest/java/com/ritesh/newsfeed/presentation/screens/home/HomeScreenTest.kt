@@ -1,6 +1,5 @@
 package com.ritesh.newsfeed.presentation.screens.home
 
-import androidx.activity.ComponentActivity
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.test.assertIsDisplayed
