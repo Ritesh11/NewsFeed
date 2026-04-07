@@ -40,6 +40,11 @@ jobs:
         
   lint:
     runs-on: ubuntu-latest
+
+    # Permission needed for hardware acceleration on Linux runners
+    permissions:
+      contents: read
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -77,5 +82,57 @@ jobs:
         with:
           name: unit-test-report
           path: app/build/reports/tests/testDebugUnitTest/
+
+
+  instrumentation-test:
+    needs: [ test ]
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Run Instrumented Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          target: google_apis
+          arch: x86_64
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -memory 2048
+          disable-animations: true
+          # THE FIX: Manual ADB handling inside the script
+          script: |
+            # 1. Kill any hung ADB servers
+            adb kill-server
+            adb start-server
+              
+            # 2. Manual wait loop for the device to appear
+            echo "Waiting for emulator to appear in ADB..."
+            timeout 300s adb wait-for-device
+              
+            # 3. Check for boot completion manually
+            echo "Waiting for boot completion..."
+            A=$(adb shell getprop sys.boot_completed | tr -d '\r')
+            while [ "$A" != "1" ]; do
+              sleep 5
+              A=$(adb shell getprop sys.boot_completed | tr -d '\r')
+            done
+            echo "Emulator is ready!"
+              
+            # 4. Run the tests
+            ./gradlew connectedDebugAndroidTest --stacktrace
+
+      - name: Upload Test Report
+        if: always() # Upload even if tests fail so you can see why
+        uses: actions/upload-artifact@v4
+        with:
+          name: instrumentation-test-report
+          path: app/build/reports/androidTests/connected/
+
+
+
 
 

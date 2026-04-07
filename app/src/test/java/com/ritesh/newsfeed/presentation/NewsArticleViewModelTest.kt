@@ -9,6 +9,7 @@ import com.ritesh.newsfeed.data.util.Resource
 import com.ritesh.newsfeed.domain.usecase.GetNewsUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
@@ -39,20 +40,18 @@ class NewsArticleViewModelTest {
         // Mock the use case to return a flow that never emits (simulating infinite loading)
         coEvery { getNewsUseCase.execute(any(), any(), any()) } returns flowOf(Resource.Loading())
 
-
         viewModel = NewsArticleViewModel(getNewsUseCase, savedStateHandle)
 
         assertThat(viewModel.articleState.value.isLoading).isTrue()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `successful fetch should update displayed articles`() = runTest {
-
         // Mock success response
         coEvery{getNewsUseCase.execute(any(), any(), any())} returns flowOf(Resource.Success(initialArticles))
 
         viewModel = NewsArticleViewModel(getNewsUseCase, savedStateHandle)
-
         // Using backgroundScope to collect StateFlow (required for stateIn(WhileSubscribed))
         backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
             viewModel.articleState.collect()
@@ -63,21 +62,20 @@ class NewsArticleViewModelTest {
         assertThat(state.displayedArticles).isEqualTo(initialArticles)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `new updates should show pending articles and hasNewUpdates true`() = runTest {
-
         // Create a behavior that emits old then new news
         val newsFlow = MutableStateFlow<Resource<List<Article>>>(Resource.Success(initialArticles))
         coEvery{getNewsUseCase.execute(any(), any(), any())} returns newsFlow
 
         viewModel = NewsArticleViewModel(getNewsUseCase, savedStateHandle)
-
         backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
             viewModel.articleState.collect()
         }
-
         // Trigger the update
         newsFlow.value = Resource.Success(newArticles)
+
 
         val state = viewModel.articleState.value
         assertThat(state.hasNewUpdates).isTrue()
