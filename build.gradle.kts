@@ -8,21 +8,26 @@ plugins {
     alias(libs.plugins.sonar) apply true
 }
 
-configure<org.sonarqube.gradle.SonarExtension> {
+allprojects {
+    apply(plugin = "org.sonarqube")
+
+    // This tells the plugin: "Don't try to find Android extensions yourself"
+    extensions.configure<org.sonarqube.gradle.SonarExtension> {
+        isSkipProject = (project.name != rootProject.name)
+    }
+}
+
+// Now configure only the ROOT project to collect the data
+sonar {
     properties {
-        property("sonar.organization", "Ritesh11")
+        property("sonar.organization", "ritesh11")
         property("sonar.projectKey", "Ritesh11_NewsFeed")
-        property("sonar.projectName", "NewsFeed")
         property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.token", System.getenv("SONAR_TOKEN") ?: "")
 
-        // Fix: Explicitly point to the debug variant
-        // This stops Sonar from searching for the 'AppExtension' manually
-        property("sonar.android.lint.reportPaths", "app/build/reports/lint-results-debug.xml")
-
-        // Add these to help Sonar find your code and classes
+        // Manually collect the files from the app module
         property("sonar.sources", "app/src/main/java,app/src/main/kotlin")
-        property("sonar.binaries", "app/build/intermediates/javac/debug/classes,app/build/tmp/kotlin-classes/debug")
-
-        property("sonar.junit.reportPaths", "app/build/test-results/testDebugUnitTest")
+        property("sonar.java.binaries", "app/build/intermediates/javac/debug/classes")
+        property("sonar.android.lint.reportPaths", "app/build/reports/lint-results-debug.xml")
     }
 }
