@@ -99,9 +99,11 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: Run Static Code Analysis
-        run: ./gradlew app:sonarqube -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-        env: GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+      - name: Run SonarQube
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew sonar
 
 
 
