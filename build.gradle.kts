@@ -20,14 +20,17 @@ allprojects {
 // Now configure only the ROOT project to collect the data
 sonar {
     properties {
-        property("sonar.organization", "ritesh11")
+        property("sonar.organization", "Ritesh11")
         property("sonar.projectKey", "Ritesh11_NewsFeed")
+        property("sonar.projectName", "NewsFeed")
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.token", System.getenv("SONAR_TOKEN") ?: "")
+
 
         // Manually collect the files from the app module
         property("sonar.sources", "app/src/main/java")
         property("sonar.java.binaries", "app/build/intermediates/javac/debug/classes")
         property("sonar.android.lint.reportPaths", "app/build/reports/lint-results-debug.xml")
+        // This forces the scanner to ignore the fact that it's an Android project
+        property("sonar.gradle.skipCheck", "true")
     }
 }
