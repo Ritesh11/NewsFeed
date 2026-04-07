@@ -86,9 +86,11 @@ jobs:
           target: google_apis
           arch: x86_64
           force-avd-creation: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
           disable-animations: true
-          script: ./gradlew connectedDebugAndroidTest --stacktrace
+          script: |
+            adb wait-for-device
+            ./gradlew connectedDebugAndroidTest --stacktrace
 
       - name: Upload Test Report
         if: always() # Upload even if tests fail so you can see why
